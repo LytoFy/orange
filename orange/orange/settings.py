@@ -52,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'middleware.LogMiddleware.ErrorMiddleware',
+    'middleware.LoginMiddleware.LoginMiddleware',
+
 ]
 
 ROOT_URLCONF = 'orange.urls'
