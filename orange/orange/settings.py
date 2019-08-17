@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'orange.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'orangdb',
+        'NAME': 'orangedb',
         'USER':"root",
-        "HOST":"localhost",
-        'PASSWORD':"root",
+        "HOST":"111.230.10.23",
+        'PASSWORD':"123456",
         "PORT":"3306"
     }
 }
