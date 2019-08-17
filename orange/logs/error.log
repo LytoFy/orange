@@ -1,3 +1,4 @@
+
 2019-08-17 15:24:38 ERROR [2036-Thread-1] LogMiddleware.process_exception line 11: 'QuerySet' object has no attribute 'to_dict'
 2019-08-17 15:24:54 ERROR [9296-Thread-1] LogMiddleware.process_exception line 11: Object of type 'QuerySet' is not JSON serializable
 2019-08-17 15:25:07 ERROR [9492-Thread-1] LogMiddleware.process_exception line 11: Object of type 'method' is not JSON serializable
@@ -15,3 +16,42 @@
 2019-08-17 19:01:18 ERROR [11620-Thread-1] LogMiddleware.process_exception line 11: 'int' object is not iterable
 2019-08-17 19:06:18 ERROR [13268-Thread-1] LogMiddleware.process_exception line 11: 'type_id'
 2019-08-17 20:40:31 ERROR [5188-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'exists'
+=======
+2019-08-17 15:35:29 ERROR [6884-Thread-1] LogMiddleware.process_exception line 11: get() takes 1 positional argument but 2 were given
+2019-08-17 15:36:14 ERROR [11556-Thread-1] LogMiddleware.process_exception line 11: In order to allow non-dict objects to be serialized set the safe parameter to False.
+2019-08-17 15:38:16 ERROR [10804-Thread-1] LogMiddleware.process_exception line 11: get() takes 1 positional argument but 2 were given
+2019-08-17 15:38:28 ERROR [10980-Thread-1] LogMiddleware.process_exception line 11: In order to allow non-dict objects to be serialized set the safe parameter to False.
+2019-08-17 16:09:32 ERROR [11372-Thread-1] LogMiddleware.process_exception line 11: check_password() missing 1 required positional argument: 'encoded'
+2019-08-17 16:09:34 ERROR [11372-Thread-1] LogMiddleware.process_exception line 11: check_password() missing 1 required positional argument: 'encoded'
+2019-08-17 17:14:11 ERROR [12416-Thread-1] LogMiddleware.process_exception line 11: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2019-08-17 17:14:57 ERROR [6256-Thread-1] LogMiddleware.process_exception line 11: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2019-08-17 17:16:51 ERROR [12392-Thread-1] LogMiddleware.process_exception line 11: [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+2019-08-17 17:17:28 ERROR [10668-Thread-1] LogMiddleware.process_exception line 11: 'str' object has no attribute 'as_string'
+2019-08-17 17:34:47 ERROR [10576-Thread-1] LogMiddleware.process_exception line 11: 'ascii' codec can't encode characters in position 0-8: ordinal not in range(128)
+2019-08-17 17:35:46 ERROR [13168-Thread-1] LogMiddleware.process_exception line 11: 'ascii' codec can't encode characters in position 0-8: ordinal not in range(128)
+2019-08-17 17:37:07 ERROR [13032-Thread-1] LogMiddleware.process_exception line 11: 'ascii' codec can't encode characters in position 0-8: ordinal not in range(128)
+2019-08-17 17:41:58 ERROR [13076-Thread-1] LogMiddleware.process_exception line 11: 'ascii' codec can't encode characters in position 0-8: ordinal not in range(128)
+2019-08-17 17:42:21 ERROR [10576-Thread-1] LogMiddleware.process_exception line 11: 'ascii' codec can't encode characters in position 0-8: ordinal not in range(128)
+2019-08-17 17:44:34 ERROR [13096-Thread-1] LogMiddleware.process_exception line 11: 'ascii' codec can't encode characters in position 0-8: ordinal not in range(128)
+2019-08-17 17:45:34 ERROR [4108-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object is not iterable
+2019-08-17 17:46:51 ERROR [5184-Thread-1] LogMiddleware.process_exception line 11: 'str' object has no attribute 'as_string'
+2019-08-17 17:53:25 ERROR [4784-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object is not callable
+2019-08-17 17:54:23 ERROR [9768-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object is not callable
+2019-08-17 17:55:07 ERROR [9472-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object is not callable
+2019-08-17 17:56:20 ERROR [12452-Thread-1] LogMiddleware.process_exception line 11: (535, b'Error: \xc7\xeb\xca\xb9\xd3\xc3\xca\xda\xc8\xa8\xc2\xeb\xb5\xc7\xc2\xbc\xa1\xa3\xcf\xea\xc7\xe9\xc7\xeb\xbf\xb4: http://service.mail.qq.com/cgi-bin/help?subtype=1&&id=28&&no=1001256')
+2019-08-17 17:57:41 ERROR [9848-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object is not iterable
+2019-08-17 18:00:03 ERROR [3164-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object is not iterable
+2019-08-17 18:06:14 ERROR [11016-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object is not iterable
+2019-08-17 18:06:42 ERROR [12944-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object is not iterable
+2019-08-17 18:07:16 ERROR [10668-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object is not iterable
+2019-08-17 20:29:23 ERROR [10492-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'FILED'
+2019-08-17 20:29:32 ERROR [10492-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'FILED'
+2019-08-17 20:30:00 ERROR [4880-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'FEILD'
+2019-08-17 20:30:20 ERROR [10144-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'FILE'
+2019-08-17 20:32:24 ERROR [9384-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'FILED'
+2019-08-17 20:33:29 ERROR [10368-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'cache'
+2019-08-17 20:39:51 ERROR [6984-Thread-1] LogMiddleware.process_exception line 11: first() got an unexpected keyword argument 'id'
+2019-08-17 20:41:07 ERROR [11120-Thread-1] LogMiddleware.process_exception line 11: invalid literal for int() with base 10: 'nan'
+2019-08-17 20:56:17 ERROR [9696-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'sex'
+2019-08-17 21:06:03 ERROR [4828-Thread-1] LogMiddleware.process_exception line 11: Object of type User is not JSON serializable
+
