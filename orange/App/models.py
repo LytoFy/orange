@@ -43,6 +43,7 @@ class Handbook(models.Model):
     type = models.ForeignKey('Style', models.DO_NOTHING, blank=True, null=True, verbose_name='手账分类')
     price = models.FloatField(blank=True, null=True, verbose_name='手账价格')
     date = models.DateTimeField(auto_now=True, verbose_name='手账上传时间')
+    name = models.CharField(max_length=50, verbose_name='手账名', default='手账模板')
 
     class Meta:
         db_table = 'handbook'
