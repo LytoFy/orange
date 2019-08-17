@@ -1,0 +1,17 @@
+2019-08-17 15:24:38 ERROR [2036-Thread-1] LogMiddleware.process_exception line 11: 'QuerySet' object has no attribute 'to_dict'
+2019-08-17 15:24:54 ERROR [9296-Thread-1] LogMiddleware.process_exception line 11: Object of type 'QuerySet' is not JSON serializable
+2019-08-17 15:25:07 ERROR [9492-Thread-1] LogMiddleware.process_exception line 11: Object of type 'method' is not JSON serializable
+2019-08-17 15:29:18 ERROR [7440-Thread-1] LogMiddleware.process_exception line 11: 'QuerySet' object has no attribute 'value'
+2019-08-17 15:29:20 ERROR [7440-Thread-1] LogMiddleware.process_exception line 11: 'QuerySet' object has no attribute 'value'
+2019-08-17 15:29:26 ERROR [7440-Thread-1] LogMiddleware.process_exception line 11: 'QuerySet' object has no attribute 'value'
+2019-08-17 15:38:12 ERROR [2592-Thread-1] LogMiddleware.process_exception line 11: 'bool' object is not iterable
+2019-08-17 15:40:59 ERROR [11952-Thread-1] LogMiddleware.process_exception line 11: Object of type 'QuerySet' is not JSON serializable
+2019-08-17 16:30:22 ERROR [11476-Thread-1] LogMiddleware.process_exception line 11: 'QuerySet' object has no attribute 'value'
+2019-08-17 16:30:26 ERROR [11468-Thread-1] LogMiddleware.process_exception line 11: 'QuerySet' object has no attribute 'value'
+2019-08-17 16:30:39 ERROR [10604-Thread-1] LogMiddleware.process_exception line 11: 'QuerySet' object has no attribute 'value'
+2019-08-17 16:31:09 ERROR [13172-Thread-1] LogMiddleware.process_exception line 11: 
+2019-08-17 17:23:06 ERROR [12132-Thread-1] LogMiddleware.process_exception line 11: Cannot resolve keyword 'user' into field. Choices are: date, id, likemural, path, type, type_id
+2019-08-17 17:23:56 ERROR [12808-Thread-1] LogMiddleware.process_exception line 11: Cannot resolve keyword 'user' into field. Choices are: date, id, likemural, path, type, type_id
+2019-08-17 19:01:18 ERROR [11620-Thread-1] LogMiddleware.process_exception line 11: 'int' object is not iterable
+2019-08-17 19:06:18 ERROR [13268-Thread-1] LogMiddleware.process_exception line 11: 'type_id'
+2019-08-17 20:40:31 ERROR [5188-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'exists'
