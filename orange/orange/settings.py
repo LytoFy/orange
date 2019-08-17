@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'orangedb',
-        'USER':"root",
+        'USER':"orange",
         "HOST":"111.230.10.23",
         'PASSWORD':"123456",
         "PORT":"3306"
