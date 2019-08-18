@@ -1,5 +1,6 @@
 import datetime
 
+from django.core import cache
 from django.http import JsonResponse
 from App.models import *
 
@@ -9,9 +10,9 @@ from App.models import *
 # 粉丝数量/我的粉丝
 def fans(request):
     if request.method == "POST":
-        # user = request.user
+        user = request.user
 
-        user = User.objects.get(id=2)
+        # user = User.objects.get(id=2)
         if not user:
             return JsonResponse(data={"code":"0","msg":"fail","data":{"error":"未检测到用户已登录"}})
         # 根据个人id查询出粉丝id
@@ -40,9 +41,9 @@ def fans(request):
 # 我关注的数量/我关注的人
 def concern(request):
     if request.method == "POST":
-        # user = request.user
+        user = request.user
 
-        user = User.objects.get(id=3)
+        # user = User.objects.get(id=3)
 
         if not user:
             return JsonResponse(data={"code":"0","msg":"fail","data":{"error":"未检测到用户已登录"}})
@@ -71,8 +72,8 @@ def concern(request):
 # 粉丝取消，也就是取消关注  需要传入用户id 不能是自己
 def fanscancle(request):
     if request.method == "POST":
-        # user = request.user
-        user = User.objects.get(id=1)  # 有 2 ， 4 两个粉丝
+        user = request.user
+        # user = User.objects.get(id=1)  # 有 2 ， 4 两个粉丝
         if not user:
             return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "未检测到用户已登录"}})
         userid = None
@@ -110,9 +111,9 @@ def fanscancle(request):
 # 喜欢我的人数/喜欢我的人
 def like(request):
     if request.method == "POST":
-        # user = request.user
+        user = request.user
 
-        user = User.objects.get(id=1)
+        # user = User.objects.get(id=1)
 
         if not user:
             return JsonResponse(data={"code":"0","msg":"fail","data":{"error":"未检测到用户已登录"}})
@@ -140,9 +141,9 @@ def like(request):
 # 喜欢的壁纸数量/壁纸信息集合
 def likemural(request):
     if request.method == "POST":
-        # user = request.user
+        user = request.user
 
-        user = User.objects.get(id=1)
+        # user = User.objects.get(id=1)
 
         if not user:
             return JsonResponse(data={"code":"0","msg":"fail","data":{"error":"未检测到用户已登录"}})
@@ -179,21 +180,28 @@ def likemural(request):
 # 用户收藏壁纸或手账
 def collection(request):
     if request.method == "POST":
-        # user = request.user
-
-        user = User.objects.get(id=1)
+        user = request.user
+        # user = User.objects.get(id=1)
 
         if not user:
             return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "未检测到用户已登录"}})
-        typeid = None
+        imgid = None
         try:
-            typeid = int(request.POST.get("typeid"))
+            imgid = int(request.POST.get("imgid"))
         except:
             return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "类型转换错误"}})
-        img = Mural.objects.get(type=typeid)
+        img = Mural.objects.filter(id=imgid).first()
+        if not img:
+            img = Handbook.objects.filter(id=imgid).first()
+
+        # 判断是否收藏过本手账或者图片
+        userimg = UserImg.objects.filter().values("path")
+        for usei in userimg:
+            if img.path == usei["path"]:
+                return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "不可以重复收藏"}})
+
         # 获取图片是手账还是壁纸
-        typ = Style.objects.get(id=typeid)
-        print(typ.type)
+        typ = Style.objects.get(id=img.type_id)
         # 如果是手账 ==1   混合  ==2    壁纸 ==3
         if typ.type == 1:
             UserImg.objects.create(path=img.path,type=3,upload_date=datetime.datetime.now(),user=user)
@@ -206,7 +214,6 @@ def collection(request):
             "code": 1,
             'msg': "success",
             "data": {
-
             }
         }
         return JsonResponse(data=data)
