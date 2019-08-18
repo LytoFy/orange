@@ -66,3 +66,10 @@
 =======
 2019-08-18 10:17:57 ERROR [6388-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'name'
 >>>>>>> dd8529578dc390bb5d9610686fe26d5d2568c30e
+2019-08-18 11:53:33 ERROR [12284-Thread-1] LogMiddleware.process_exception line 11: Cannot assign "<QuerySet [<User: User object (5)>]>": "UserImg.user" must be a "User" instance.
+2019-08-18 12:02:58 ERROR [1864-Thread-1] LogMiddleware.process_exception line 11: Cannot resolve keyword 'user_id' into field. Choices are: date, fans, fans_id, followers, followers_id, id
+2019-08-18 14:38:01 ERROR [11308-Thread-1] LogMiddleware.process_exception line 11: 'dict' object has no attribute 'delete'
+2019-08-18 14:40:18 ERROR [11160-Thread-1] LogMiddleware.process_exception line 11: 'UserImg' object has no attribute 'values'
+2019-08-18 15:51:48 ERROR [12616-Thread-1] LogMiddleware.process_exception line 11: Cannot resolve keyword 'id_delete' into field. Choices are: del_date, id, info, is_delete, path, type, upload_date, user, user_id
+2019-08-18 16:12:11 ERROR [2664-Thread-1] LogMiddleware.process_exception line 11: ['’‘ 必须为合法的日期格式，请使用 YYYY-MM-DD 格式。']
+2019-08-18 16:13:31 ERROR [12880-Thread-1] LogMiddleware.process_exception line 11: (2003, "Can't connect to MySQL server on '111.230.10.23' (10060)")
