@@ -55,3 +55,10 @@
 2019-08-17 20:56:17 ERROR [9696-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'sex'
 2019-08-17 21:06:03 ERROR [4828-Thread-1] LogMiddleware.process_exception line 11: Object of type User is not JSON serializable
 
+2019-08-18 09:12:11 ERROR [6932-Thread-3] LogMiddleware.process_exception line 11: Mural matching query does not exist.
+2019-08-18 09:13:36 ERROR [11144-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'type_id'
+2019-08-18 09:15:45 ERROR [7028-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'to_dict'
+2019-08-18 09:40:50 ERROR [1492-Thread-1] LogMiddleware.process_exception line 11: too many values to unpack (expected 2)
+2019-08-18 10:00:22 ERROR [1272-Thread-1] LogMiddleware.process_exception line 11: Cannot assign "<SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x0000000004351908>>": "UserImg.user" must be a "User" instance.
+2019-08-18 10:14:38 ERROR [5656-Thread-1] LogMiddleware.process_exception line 11: Cannot assign "<SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x00000000049CDA20>>": "UserImg.user" must be a "User" instance.
+2019-08-18 10:19:40 ERROR [11988-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'cache'
