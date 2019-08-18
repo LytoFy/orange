@@ -1,10 +1,6 @@
 import datetime
 
-<<<<<<< HEAD
 from django.core.cache import cache
-=======
-from django.core import cache
->>>>>>> pqw
 from django.http import JsonResponse
 from App.models import *
 
@@ -14,20 +10,12 @@ from App.models import *
 # 粉丝数量/我的粉丝（查询接口）
 def myfans(request):
     if request.method == "POST":
-<<<<<<< HEAD
         loginuserid = cache.get('userid')
         # user = User.objects.get(id=1)
 
         if not loginuserid:
             return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "未检测到用户已登录"}})
         user = User.objects.filter(id=loginuserid).first()
-=======
-        user = request.user
-
-        # user = User.objects.get(id=2)
-        if not user:
-            return JsonResponse(data={"code":"0","msg":"fail","data":{"error":"未检测到用户已登录"}})
->>>>>>> pqw
         # 根据个人id查询出粉丝id
         lfans = list(Concern.objects.filter(followers=user).values())
 
@@ -63,14 +51,8 @@ def myfans(request):
 # 我关注的数量/我关注的人（查询接口）
 def myconcern(request):
     if request.method == "POST":
-<<<<<<< HEAD
         loginuserid = cache.get('userid')
         # user = User.objects.get(id=1)
-=======
-        user = request.user
-
-        # user = User.objects.get(id=3)
->>>>>>> pqw
 
         if not loginuserid:
             return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "未检测到用户已登录"}})
@@ -100,16 +82,10 @@ def myconcern(request):
 # 粉丝取消，（动作接口）也就是取消关注  需要传入用户id 不能是自己
 def concernto(request):
     if request.method == "POST":
-<<<<<<< HEAD
         loginuserid = cache.get('userid')
         # user = User.objects.get(id=1)
 
         if not loginuserid:
-=======
-        user = request.user
-        # user = User.objects.get(id=1)  # 有 2 ， 4 两个粉丝
-        if not user:
->>>>>>> pqw
             return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "未检测到用户已登录"}})
         user = User.objects.filter(id=loginuserid).first()
         userid = None
@@ -148,12 +124,7 @@ def concernto(request):
 # 喜欢我的人数/喜欢我的人,查询谁喜欢我 （查询接口）
 def likeme(request):
     if request.method == "POST":
-<<<<<<< HEAD
         loginuserid = cache.get('userid')
-=======
-        user = request.user
-
->>>>>>> pqw
         # user = User.objects.get(id=1)
 
         if not loginuserid:
@@ -184,7 +155,6 @@ def likeme(request):
 # 喜欢谁，点击to ,我要喜欢谁，或者我要取消喜欢谁（动作接口）
 def liketo(request):
     if request.method == "POST":
-<<<<<<< HEAD
         loginuserid = cache.get('userid')
         # user = User.objects.get(id=1)
 
@@ -216,11 +186,6 @@ def liketo(request):
             }
         }
         return JsonResponse(data=data)
-=======
-        user = request.user
-
-        # user = User.objects.get(id=1)
->>>>>>> pqw
 
     elif request.method == "GET":
         return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "别用GET请求啊"}})
@@ -269,7 +234,6 @@ def mylikemural(request):
 # 点击喜欢的壁纸/取消喜欢的壁纸（动作接口）
 def likemuralto(request):
     if request.method == "POST":
-<<<<<<< HEAD
         loginuserid = cache.get('userid')
         # user = User.objects.get(id=1)
 
@@ -289,10 +253,6 @@ def likemuralto(request):
             img.delete()
         else:
             LikeMural.objects.create(user_id=user.id,mural_id=muraid)
-=======
-        user = request.user
-        # user = User.objects.get(id=1)
->>>>>>> pqw
 
         data = {
             "code": 1,
@@ -314,10 +274,7 @@ def collectionto(request):
 
         if not loginuserid:
             return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "未检测到用户已登录"}})
-<<<<<<< HEAD
         user = User.objects.filter(id=loginuserid).first()
-=======
->>>>>>> pqw
         imgid = None
         try:
             imgid = int(request.POST.get("imgid"))
@@ -328,18 +285,11 @@ def collectionto(request):
             img = Handbook.objects.filter(id=imgid).first()
 
         # 判断是否收藏过本手账或者图片
-<<<<<<< HEAD
         userimg = UserImg.objects.filter(user_id=user.id)
         for usei in userimg:
             if img.path == usei.path:
                 usei.delete()
                 return JsonResponse(data={"code": "1", "msg": "success", "data": {"success": "已从收藏列表中去除"}})
-=======
-        userimg = UserImg.objects.filter().values("path")
-        for usei in userimg:
-            if img.path == usei["path"]:
-                return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "不可以重复收藏"}})
->>>>>>> pqw
 
         # 获取图片是手账还是壁纸
         typ = Style.objects.get(id=img.type_id)
@@ -355,7 +305,6 @@ def collectionto(request):
             "code": 1,
             'msg': "success",
             "data": {
-<<<<<<< HEAD
                 "success": "已添加到收藏列表"
             }
         }
@@ -384,8 +333,6 @@ def listrecover(request):
             'msg': "success",
             "data": {
                 "imgdel":imgdel,
-=======
->>>>>>> pqw
             }
         }
 
