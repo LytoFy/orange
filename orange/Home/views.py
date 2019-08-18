@@ -171,6 +171,7 @@ class MarkHand(View):
             return JsonResponse(data)
 
 
+
         # 分类类型id
         hand_type = int(request.GET.get("typeid", 0))
         if 1 == int(request.GET.get("mark")):
@@ -196,3 +197,4 @@ class MarkHand(View):
             data["code"] = 0
             data['msg'] = "输入参数错误"
             return JsonResponse(data)
+
