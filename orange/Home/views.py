@@ -1,8 +1,11 @@
+import datetime
+
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views import View
 
 from App.models import *
+from App.views import Upload
 
 
 class MarkIndex(View):
@@ -24,10 +27,10 @@ class MarkIndex(View):
             ]
         }
         curr_id = request.GET.get("type", 1)
-        print(curr_id)
         if 1 == int(curr_id):
             # 手账主要类型
-            types = list(Style.objects.filter(type=1).values())
+            types = list(Style.objects.filter(type__lte=2).values())
+
             # 去手账表获取一张图片返回给前端
             for type_obj in types:
                 img = Handbook.objects.filter(type_id=int(type_obj.get("id"))).first().path
@@ -37,7 +40,7 @@ class MarkIndex(View):
             return JsonResponse(data)
         elif 2 == int(curr_id):
             # 壁纸
-            types = list(Style.objects.filter(type=2).values())
+            types = list(Style.objects.filter(type__gte=2).values())
             # 去手账表获取一张图片返回给前端
             for type_obj in types:
                 img = Mural.objects.filter(type_id=int(type_obj.get("id"))).first().path
@@ -53,7 +56,7 @@ class MarkIndex(View):
 
 class NBPeople(View):
     '''
-        达人中心
+        达人中心: 必须先登录后才能查看
     '''
 
     def get(self, request):
@@ -64,18 +67,27 @@ class NBPeople(View):
 
             ]
         }
+        try:
+            curr_user = request.user
+            if str(curr_user) == 'AnonymousUser':
+                data["code"] = 0
+                data["msg"] = "请先登录"
+                return JsonResponse(data)
+        except:
+            data["code"] = 0
+            data["msg"] = "请先登录"
+            return JsonResponse(data)
+
         curr_id = request.GET.get("type")
-        curr_user = "pqw"
         if 1 == int(curr_id):
             # 手账达人
             users = list(User.objects.filter().order_by('date').values('id', "name", 'icon'))
 
             for people in users:
                 # 找每个人的喜欢的人
-                print(people)
                 num = LikePerson.objects.filter(user_id=people.get("id")).count()
                 is_fans = False
-                if LikePerson.objects.filter().exists():
+                if LikePerson.objects.filter(user_like=curr_user).exists():
                     is_fans = True
                 people["num"] = num
                 people["is_fans"] = is_fans
@@ -91,10 +103,9 @@ class NBPeople(View):
 
             for people in users:
                 # 找每个人的喜欢的人
-                print(people)
                 num = LikePerson.objects.filter(user_id=people.get("id")).count()
                 is_fans = False
-                if LikePerson.objects.filter().exists():
+                if LikePerson.objects.filter(user_like=curr_user).exists():
                     is_fans = True
                 people["num"] = num
                 people["is_fans"] = is_fans
@@ -161,15 +172,14 @@ class MarkHand(View):
         # 获取相关的分类
         if int(request.GET.get("mark")) == 1 and not request.GET.get("typeid"):
             # 获取手账的分类
-            lists = list(Style.objects.filter(type=1).values())
+            lists = list(Style.objects.filter(type__lte=2).values())
             data["data"] = lists
             return JsonResponse(data)
-        elif int(request.GET.get("mark"))  == 2 and not request.GET.get("typeid"):
+        elif int(request.GET.get("mark")) == 2 and not request.GET.get("typeid"):
             # 获取手账的分类
-            lists = list(Style.objects.filter(type=1).values())
+            lists = list(Style.objects.filter(type__gte=2).values())
             data["data"] = lists
             return JsonResponse(data)
-
 
         # 分类类型id
         hand_type = int(request.GET.get("typeid", 0))
@@ -196,3 +206,74 @@ class MarkHand(View):
             data["code"] = 0
             data['msg'] = "输入参数错误"
             return JsonResponse(data)
+
+
+class UploadFile(View):
+    '''
+        文件上传等操作。
+            必须进行登录
+    '''
+    def post(self, request):
+        data = {
+            "code": 1,
+            "msg": "success",
+            "data": [
+
+            ]
+        }
+        try:
+            curr_user = request.user
+            if str(curr_user) == 'AnonymousUser':
+                data["code"] = 0
+                data["msg"] = "请先登录"
+                return JsonResponse(data)
+        except:
+            data["code"] = 0
+            data["msg"] = "请先登录"
+            return JsonResponse(data)
+
+        # 判断参数，1为手账上传，2 为壁纸上传
+        if "1" == request.POST.get("type"):
+            hand = request.FILES.get("picture")
+            try:
+                hbook = UserImg()
+                hbook.user = request.user
+
+                # 上传腾讯云服务器。
+                hbook.path = Upload().file(hand)
+                hbook.upload_date = datetime.datetime.now()
+                hbook.type = 1
+                hbook.is_delete = False
+                hbook.save()
+                return JsonResponse(data)
+            except:
+                data["code"] = 0
+                data["msg"] = "上传失败"
+                return JsonResponse(data)
+
+        elif "2" == request.POST.get("type"):
+
+            pictures = request.FILES.getlist("picture")
+
+            try:
+                for picture in pictures:
+                    hbook = UserImg()
+                    hbook.user = request.user
+                    hbook.path = Upload().file(picture)
+                    hbook.upload_date = datetime.datetime.now()
+                    hbook.type = 2
+                    hbook.is_delete = False
+                    hbook.save()
+                return JsonResponse(data)
+            except:
+                data["code"] = 0
+                data["msg"] = "上传失败"
+                return JsonResponse(data)
+
+        else:
+            data["code"] = 0
+            data["msg"] = "参数传入有误"
+            return JsonResponse(data)
+
+
+
