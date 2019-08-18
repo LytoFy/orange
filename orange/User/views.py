@@ -72,7 +72,7 @@ class Register(View):
                 user.email=email
                 user.password = make_password(password)
                 user.save()
-                inf_logger.info(f"%s注册成功" % email)
+                inf_logger.info("%s注册成功" % email)
                 data = {
                     'code': '1',
                     'msg': '用户注册成功'
@@ -89,28 +89,35 @@ class Login(View):
     def post(self,request):
         email = request.POST.get('email')
         password = request.POST.get('password')
-        password = check_password(password,make_password(password))
-        if email and password:
+
+        if not (email and password):
             return JsonResponse({'code':'0','msg':'有为空选项'})
-        user = User.objects.filter(email=email,password=password).first()
+        user = User.objects.filter(email=email).first()
         if user:
-            cache.set('userid',user.id)
-            inf_logger.info(f"%s登陆成功" % email)
-            date = {
-                'code': 1,
-                'msg': '用户登陆成功'
-            }
-            return  JsonResponse(date)
+            if check_password(password, user.password):
+                cache.set('userid',user.id)
+                inf_logger.info("%s登陆成功" % email)
+                date = {
+                    'code': 1,
+                    'msg': '用户登陆成功'
+                }
+                return  JsonResponse(date)
+            else:
+                data = {
+                    'code': 0,
+                    'msg': '密码不正确'
+                }
+                return JsonResponse(data)
         else:
             data = {
                 'code': 0,
-                'msg': '用户名或密码不正确'
+                'msg': '用户名不正确'
             }
             return JsonResponse(data)
 
 class Loginout(View):
     def get(self,request):
-        inf_logger.info(f"%s注销成功" % request.session.get('userid'))
+        inf_logger.info("%s注销成功" % request.session.get('userid'))
         cache.delete('userid')
         data = {
             'code': '1',
@@ -129,43 +136,45 @@ class ModifyInfo(View):
         sign = request.POST.get('sign')
         sex = request.POST.get('sex')
         icon = request.FILES.get('icon')
-        if name or sign or sex or icon:
+        if not (name or  sign or sex or icon):
             return JsonResponse({'code':'0','msg':'不能为空'})
         userid = cache.get('userid')
-        user = User.objects.filter(id=userid).first()
-        if name:
-            user.name=name
-            user.save()
-            data['code']="1"
-            data['msg']="用户名修改成功"
-            data['name']=name
-        if sign:
-            user.sign=sign
-            user.save()
-            data['code'] = "1"
-            data['msg'] = "个性签名修改成功"
-            data['sign'] = sign
-        if sex:
-            user.sex=sex
-            user.save()
-            data['code'] = "1"
-            data['msg'] = "性别修改成功"
-            if sex=='1':
-                data['sex'] = '男'
-            elif sex =='0':
-                data['sex'] = '女'
-            else:
-                data['code'] = "0"
-                data['msg'] = "性别修改失败"
-                data['sex'] = '输入错误'
-        if icon:
-            # user.icon=icon
-            #头像存储
-            user.save()
-            data['code'] = "1"
-            data['msg'] = "头像修改成功"
-            data['icon'] = icon
+        if userid:
+            user = User.objects.filter(id=userid).first()
+            if name:
+                user.name=name
+                user.save()
+                data['code']="1"
+                data['msg']="用户名修改成功"
+                data['name']=name
+            if sign:
+                user.sign=sign
+                user.save()
+                data['code'] = "1"
+                data['msg'] = "个性签名修改成功"
+                data['sign'] = sign
+            if sex:
+                user.sex=sex
+                user.save()
+                data['code'] = "1"
+                data['msg'] = "性别修改成功"
+                if sex=='1':
+                    data['sex'] = '男'
+                elif sex =='0':
+                    data['sex'] = '女'
+                else:
+                    data['code'] = "0"
+                    data['msg'] = "性别修改失败"
+                    data['sex'] = '输入错误'
+            if icon:
+                # user.icon=icon
+                #头像存储
+                user.save()
+                data['code'] = "1"
+                data['msg'] = "头像修改成功"
+                data['icon'] = icon
 
+            return JsonResponse(data)
         return JsonResponse(data)
 
 class Info(View):
