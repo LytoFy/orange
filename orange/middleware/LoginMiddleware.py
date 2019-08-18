@@ -1,7 +1,6 @@
-<<<<<<< HEAD
-=======
+
 from django.contrib.auth.hashers import check_password
->>>>>>> pqw
+
 from django.core.cache import cache
 from django.http import JsonResponse
 from django.shortcuts import redirect,reverse
@@ -12,15 +11,13 @@ from App.models import User
 
 class LoginMiddleware(MiddlewareMixin):
     def process_request(self,request):
-<<<<<<< HEAD
-        path_list = ['/orange/user/info/','/orange/relative/fans/','/orange/relative/concern/','/orange/relative/fanscancle/','/orange/relative/like/','/orange/relative/collection/','/orange/relative/likemural/']  #如果在这个列表就需要验证是否登陆
-        #同url 排除get请求的需要自己加if判断
-        if request.path in path_list:
-            userid = cache.get('userid')
-            if not userid:
-                return JsonResponse({'msg': '请先登陆', 'code': 0})
-=======
-        path_list = ['/orange/user/login/','/orange/user/info/','/orange/relative/fans/','/orange/relative/concern/','/orange/relative/fanscancle/','/orange/relative/like/','/orange/relative/collection/','/orange/relative/likemural/', '/orange/home/upload/', '/orange/home/handpeople/']  #如果在这个列表就需要验证是否登陆
+
+
+        path_list = ['/orange/user/login/','/orange/user/info/', '/orange/home/upload/',
+                     '/orange/home/handpeople/','/orange/relative/myconcern/','/orange/relative/concernto/',
+                     '/orange/relative/likeme/','/orange/relative/liketo/','/orange/relative/mylikemural/',
+                     '/orange/relative/likemuralto/','/orange/relative/myfans/','/orange/relative/collectionto/',
+                     '/orange/relative/listrecover/','/orange/relative/recoverordelete/',]  #如果在这个列表就需要验证是否登陆
         #同url 排除get请求的需要自己加if判断
         if request.path in path_list:
             userid = cache.get('userid')
@@ -40,7 +37,7 @@ class LoginMiddleware(MiddlewareMixin):
                         return JsonResponse({'msg': '登陆成功', 'code': 1})
                 else:
                     return JsonResponse({'msg': '请先登陆', 'code': 0})
->>>>>>> pqw
+
             else:
                 request.user = User.objects.get(pk = userid)
 
