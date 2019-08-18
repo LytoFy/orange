@@ -56,6 +56,7 @@
 2019-08-17 21:06:03 ERROR [4828-Thread-1] LogMiddleware.process_exception line 11: Object of type User is not JSON serializable
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 2019-08-18 09:12:11 ERROR [6932-Thread-3] LogMiddleware.process_exception line 11: Mural matching query does not exist.
 2019-08-18 09:13:36 ERROR [11144-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'type_id'
 2019-08-18 09:15:45 ERROR [7028-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'to_dict'
@@ -67,6 +68,7 @@
 2019-08-18 10:17:57 ERROR [6388-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'name'
 <<<<<<< HEAD
 >>>>>>> dd8529578dc390bb5d9610686fe26d5d2568c30e
+<<<<<<< HEAD
 =======
 2019-08-18 13:02:04 ERROR [2712-Thread-1] LogMiddleware.process_exception line 11: Object of type QuerySet is not JSON serializable
 2019-08-18 13:45:22 ERROR [11204-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'get'
@@ -94,3 +96,24 @@
 2019-08-18 16:13:41 ERROR [11088-Thread-1] LogMiddleware.process_exception line 11: unhashable type: 'dict'
 2019-08-18 16:14:19 ERROR [6900-Thread-1] LogMiddleware.process_exception line 11: unhashable type: 'dict'
 >>>>>>> lyf
+=======
+2019-08-18 11:53:33 ERROR [12284-Thread-1] LogMiddleware.process_exception line 11: Cannot assign "<QuerySet [<User: User object (5)>]>": "UserImg.user" must be a "User" instance.
+2019-08-18 12:02:58 ERROR [1864-Thread-1] LogMiddleware.process_exception line 11: Cannot resolve keyword 'user_id' into field. Choices are: date, fans, fans_id, followers, followers_id, id
+2019-08-18 14:38:01 ERROR [11308-Thread-1] LogMiddleware.process_exception line 11: 'dict' object has no attribute 'delete'
+2019-08-18 14:40:18 ERROR [11160-Thread-1] LogMiddleware.process_exception line 11: 'UserImg' object has no attribute 'values'
+2019-08-18 15:51:48 ERROR [12616-Thread-1] LogMiddleware.process_exception line 11: Cannot resolve keyword 'id_delete' into field. Choices are: del_date, id, info, is_delete, path, type, upload_date, user, user_id
+2019-08-18 16:12:11 ERROR [2664-Thread-1] LogMiddleware.process_exception line 11: ['’‘ 必须为合法的日期格式，请使用 YYYY-MM-DD 格式。']
+2019-08-18 16:13:31 ERROR [12880-Thread-1] LogMiddleware.process_exception line 11: (2003, "Can't connect to MySQL server on '111.230.10.23' (10060)")
+>>>>>>> slj
+=======
+2019-08-18 11:36:37 ERROR [13944-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 11:37:48 ERROR [10204-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 11:38:25 ERROR [17116-Thread-1] LogMiddleware.process_exception line 11: name 'curr_user' is not defined
+2019-08-18 11:38:43 ERROR [7760-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 11:39:35 ERROR [10556-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 11:41:32 ERROR [10844-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 11:42:27 ERROR [12932-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 12:29:20 ERROR [11776-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'peoele'
+2019-08-18 13:29:10 ERROR [9724-Thread-1] LogMiddleware.process_exception line 11: must be str, not type
+2019-08-18 13:30:11 ERROR [8512-Thread-1] LogMiddleware.process_exception line 11: unsupported operand type(s) for +: 'InMemoryUploadedFile' and 'str'
+>>>>>>> pqw

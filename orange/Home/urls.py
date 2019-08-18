@@ -9,5 +9,6 @@ urlpatterns = [
     re_path(r"temphand/((\d*)?)/?", TempHand.as_view(), name="temphand"),
 
     re_path(r"mcenter/", MarkHand.as_view(), name="mcenter"),
+    re_path(r"upload/", UploadFile.as_view(), name="upload"),
 
 ]
