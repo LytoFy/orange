@@ -72,7 +72,7 @@ class Register(View):
                 user.email=email
                 user.password = make_password(password)
                 user.save()
-                inf_logger.info(f"%s注册成功" % email)
+                inf_logger.info("%s注册成功" % email)
                 data = {
                     'code': '1',
                     'msg': '用户注册成功'
@@ -89,28 +89,35 @@ class Login(View):
     def post(self,request):
         email = request.POST.get('email')
         password = request.POST.get('password')
-        password = check_password(password,make_password(password))
-        if email and password:
+
+        if not (email and password):
             return JsonResponse({'code':'0','msg':'有为空选项'})
-        user = User.objects.filter(email=email,password=password).first()
+        user = User.objects.filter(email=email).first()
         if user:
-            cache.set('userid',user.id)
-            inf_logger.info(f"%s登陆成功" % email)
-            date = {
-                'code': 1,
-                'msg': '用户登陆成功'
-            }
-            return  JsonResponse(date)
+            if check_password(password, user.password):
+                cache.set('userid',user.id)
+                inf_logger.info("%s登陆成功" % email)
+                date = {
+                    'code': 1,
+                    'msg': '用户登陆成功'
+                }
+                return  JsonResponse(date)
+            else:
+                data = {
+                    'code': 0,
+                    'msg': '密码不正确'
+                }
+                return JsonResponse(data)
         else:
             data = {
                 'code': 0,
-                'msg': '用户名或密码不正确'
+                'msg': '用户名不正确'
             }
             return JsonResponse(data)
 
 class Loginout(View):
     def get(self,request):
-        inf_logger.info(f"%s注销成功" % request.session.get('userid'))
+        inf_logger.info("%s注销成功" % request.session.get('userid'))
         cache.delete('userid')
         data = {
             'code': '1',
@@ -129,53 +136,133 @@ class ModifyInfo(View):
         sign = request.POST.get('sign')
         sex = request.POST.get('sex')
         icon = request.FILES.get('icon')
-        if name or sign or sex or icon:
+        if not (name or  sign or sex or icon):
             return JsonResponse({'code':'0','msg':'不能为空'})
         userid = cache.get('userid')
-        user = User.objects.filter(id=userid).first()
-        if name:
-            user.name=name
-            user.save()
-            data['code']="1"
-            data['msg']="用户名修改成功"
-            data['name']=name
-        if sign:
-            user.sign=sign
-            user.save()
-            data['code'] = "1"
-            data['msg'] = "个性签名修改成功"
-            data['sign'] = sign
-        if sex:
-            user.sex=sex
-            user.save()
-            data['code'] = "1"
-            data['msg'] = "性别修改成功"
-            if sex=='1':
-                data['sex'] = '男'
-            elif sex =='0':
-                data['sex'] = '女'
-            else:
-                data['code'] = "0"
-                data['msg'] = "性别修改失败"
-                data['sex'] = '输入错误'
-        if icon:
-            # user.icon=icon
-            #头像存储
-            user.save()
-            data['code'] = "1"
-            data['msg'] = "头像修改成功"
-            data['icon'] = icon
+        if userid:
+            user = User.objects.filter(id=userid).first()
+            if name:
+                user.name=name
+                user.save()
+                data['code']="1"
+                data['msg']="用户名修改成功"
+                data['name']=name
+            if sign:
+                user.sign=sign
+                user.save()
+                data['code'] = "1"
+                data['msg'] = "个性签名修改成功"
+                data['sign'] = sign
+            if sex:
+                user.sex=sex
+                user.save()
+                data['code'] = "1"
+                data['msg'] = "性别修改成功"
+                if sex=='1':
+                    data['sex'] = '男'
+                elif sex =='0':
+                    data['sex'] = '女'
+                else:
+                    data['code'] = "0"
+                    data['msg'] = "性别修改失败"
+                    data['sex'] = '输入错误'
+            if icon:
+                # user.icon=icon
+                #头像存储
+                user.save()
+                data['code'] = "1"
+                data['msg'] = "头像修改成功"
+                data['icon'] = icon
 
+            return JsonResponse(data)
         return JsonResponse(data)
 
 class Info(View):
     def get(self,requsert):
         userid = cache.get('userid')
         user = User.objects.filter(id=userid)
+        fans = len(Concern.objects.filter(followers_id=userid))
+        followers = len(Concern.objects.filter(fans_id=userid))
+        like_num = len(LikePerson.objects.filter(user_id=userid))
         user = list(user.values('id','name','sex','sign','icon'))
+
         data={
             'code': '1',
             'msg': '信息获取',
-            'user':user
+            'user':user,
+            'followers':followers,
+            'fans':fans,
+            'like_num':like_num,
+
         }
         return JsonResponse(data)
+
+
+
+class Find(View):
+
+    def get(self,request):
+        findtext = request.GET.get('findtext')
+        if findtext:
+            find = []
+            for i in findtext:
+                find1 = User.objects.filter(name__contains=i)
+                find2 = Handbook.objects.filter(name__contains=i)
+                find3 = Style.objects.filter(name__contains=i)
+                findend = list(find1.values_list('name'))+list(find2.values_list('name'))+list(find3.values_list('name'))
+                findend = list(set(findend))
+                for value in findend:
+                    find.append(value[0])
+            data = {
+                'code': '1',
+                'msg': '信息获取',
+                'find':find,
+            }
+            return JsonResponse(data)
+        else:
+            data = {
+                'code': '0',
+                'msg': '失败',
+            }
+            return JsonResponse(data)
+    def post(self,request):
+        findtext = request.POST.get('findtext')
+        find1 = User.objects.filter(name=findtext)
+        find2 = Handbook.objects.filter(name=findtext)
+        find3 = Style.objects.filter(name=findtext).first()
+
+        info = []
+        handbook = []
+        muralimg = []
+        if find1:
+            for i in find1:
+                try:
+                    like_num = len(LikePerson.objects.filter(user_id=i.id))
+                    iscenter = Concern.objects.filter(fans_id=cache.get('userid'),followers_id=i.id).exists()
+                    user_img = list(UserImg.objects.filter(user_id=i.id).values('path','type'))
+                    info.append({'id':i.id,'name':i.name,'icon':i.icon,'like_num':like_num,'iscenter':iscenter,'user_img':user_img})
+                except:
+                    return JsonResponse({'code':0,"msg":"不正确使用"})
+        if find2:
+            for i in find2:
+                handimg = list(Handbook.objects.filter(name=i.name).values())
+                handbook.append({'path':handimg})
+
+        if find3:
+            muraltype = find3.type
+            if muraltype >= 2:
+                muralimg = list(Mural.objects.filter(type_id=find3.id).values())
+            if muraltype <= 2:
+                muralimg = list(Handbook.objects.filter(type_id=find3.id).values())
+
+
+        data = {
+            'code': '1',
+            'msg': '查找信息',
+            'info':info,
+            'handbook':handbook,
+            'mural':muralimg
+        }
+        return JsonResponse(data)
+
+
