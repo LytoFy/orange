@@ -55,3 +55,4 @@
 2019-08-17 20:56:17 ERROR [9696-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'sex'
 2019-08-17 21:06:03 ERROR [4828-Thread-1] LogMiddleware.process_exception line 11: Object of type User is not JSON serializable
 
+2019-08-18 10:17:57 ERROR [6388-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'name'
