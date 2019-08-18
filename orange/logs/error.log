@@ -65,4 +65,32 @@
 2019-08-18 10:19:40 ERROR [11988-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'cache'
 =======
 2019-08-18 10:17:57 ERROR [6388-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'name'
+<<<<<<< HEAD
 >>>>>>> dd8529578dc390bb5d9610686fe26d5d2568c30e
+=======
+2019-08-18 13:02:04 ERROR [2712-Thread-1] LogMiddleware.process_exception line 11: Object of type QuerySet is not JSON serializable
+2019-08-18 13:45:22 ERROR [11204-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'get'
+2019-08-18 13:45:42 ERROR [11044-Thread-1] LogMiddleware.process_exception line 11: unsupported operand type(s) for +: 'QuerySet' and 'QuerySet'
+2019-08-18 13:46:43 ERROR [11168-Thread-1] LogMiddleware.process_exception line 11: unsupported operand type(s) for +: 'QuerySet' and 'QuerySet'
+2019-08-18 13:47:02 ERROR [7472-Thread-1] LogMiddleware.process_exception line 11: unsupported operand type(s) for +: 'QuerySet' and 'QuerySet'
+2019-08-18 13:47:23 ERROR [624-Thread-1] LogMiddleware.process_exception line 11: unsupported operand type(s) for +: 'QuerySet' and 'QuerySet'
+2019-08-18 13:58:31 ERROR [5740-Thread-1] LogMiddleware.process_exception line 11: 
+2019-08-18 15:10:40 ERROR [11204-Thread-1] LogMiddleware.process_exception line 11: 'User' object has no attribute 'values'
+2019-08-18 15:11:10 ERROR [2232-Thread-1] LogMiddleware.process_exception line 11: 'User' object has no attribute 'value'
+2019-08-18 15:11:37 ERROR [10564-Thread-1] LogMiddleware.process_exception line 11: 'User' object has no attribute 'values'
+2019-08-18 15:20:30 ERROR [10600-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'exists'
+2019-08-18 15:34:21 ERROR [10996-Thread-1] LogMiddleware.process_exception line 11: Object of type QuerySet is not JSON serializable
+2019-08-18 15:44:22 ERROR [11200-Thread-1] LogMiddleware.process_exception line 11: Object of type QuerySet is not JSON serializable
+2019-08-18 16:04:25 ERROR [8532-Thread-1] LogMiddleware.process_exception line 11: unhashable type: 'dict'
+2019-08-18 16:05:02 ERROR [10132-Thread-1] LogMiddleware.process_exception line 11: 'QuerySet' object has no attribute 'name'
+2019-08-18 16:05:26 ERROR [9484-Thread-1] LogMiddleware.process_exception line 11: unhashable type: 'dict'
+2019-08-18 16:06:40 ERROR [10132-Thread-1] LogMiddleware.process_exception line 11: 'int' object has no attribute 'type'
+2019-08-18 16:07:25 ERROR [9028-Thread-1] LogMiddleware.process_exception line 11: 'int' object has no attribute 'type'
+2019-08-18 16:08:32 ERROR [7396-Thread-1] LogMiddleware.process_exception line 11: 'int' object has no attribute 'type'
+2019-08-18 16:09:11 ERROR [696-Thread-1] LogMiddleware.process_exception line 11: 'int' object has no attribute 'type'
+2019-08-18 16:10:35 ERROR [10568-Thread-1] LogMiddleware.process_exception line 11: unhashable type: 'dict'
+2019-08-18 16:12:26 ERROR [10860-Thread-1] LogMiddleware.process_exception line 11: unhashable type: 'dict'
+2019-08-18 16:13:20 ERROR [9168-Thread-1] LogMiddleware.process_exception line 11: unhashable type: 'dict'
+2019-08-18 16:13:41 ERROR [11088-Thread-1] LogMiddleware.process_exception line 11: unhashable type: 'dict'
+2019-08-18 16:14:19 ERROR [6900-Thread-1] LogMiddleware.process_exception line 11: unhashable type: 'dict'
+>>>>>>> lyf
