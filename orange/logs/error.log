@@ -55,3 +55,13 @@
 2019-08-17 20:56:17 ERROR [9696-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'sex'
 2019-08-17 21:06:03 ERROR [4828-Thread-1] LogMiddleware.process_exception line 11: Object of type User is not JSON serializable
 
+2019-08-18 11:36:37 ERROR [13944-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 11:37:48 ERROR [10204-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 11:38:25 ERROR [17116-Thread-1] LogMiddleware.process_exception line 11: name 'curr_user' is not defined
+2019-08-18 11:38:43 ERROR [7760-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 11:39:35 ERROR [10556-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 11:41:32 ERROR [10844-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 11:42:27 ERROR [12932-Thread-1] LogMiddleware.process_exception line 11: 'AnonymousUser' object is not iterable
+2019-08-18 12:29:20 ERROR [11776-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'peoele'
+2019-08-18 13:29:10 ERROR [9724-Thread-1] LogMiddleware.process_exception line 11: must be str, not type
+2019-08-18 13:30:11 ERROR [8512-Thread-1] LogMiddleware.process_exception line 11: unsupported operand type(s) for +: 'InMemoryUploadedFile' and 'str'
