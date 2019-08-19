@@ -287,9 +287,21 @@ def collection(request):
             return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "未检测到用户已登录"}})
         user = User.objects.filter(id=loginuserid).first()
         # 查询用户收藏的手账
-        handbook = list(UserImg.objects.filter(user_id=user.id,type=3,is_delete=0).values())
+        handbook = list(UserImg.objects.filter(user_id=user.id,type=3,is_delete=0).values("path","type","info","upload_date"))
         # 查询用户收藏的壁纸
-        mural = list(UserImg.objects.filter(user_id=user.id, type=4,is_delete=0).values())
+        mural = list(UserImg.objects.filter(user_id=user.id, type=4,is_delete=0).values("path","type","info","upload_date"))
+
+        for i in handbook:
+            img = Handbook.objects.filter(path=i["path"]).first()
+            if not img:
+                img = Mural.objects.filter(path=i["path"]).first()
+            i["imgid"] = img.id
+
+        for j in mural:
+            img = Handbook.objects.filter(path=j["path"]).first()
+            if not img:
+                img = Mural.objects.filter(path=j["path"]).first()
+            j["imgid"] = img.id
 
 
         data = {
