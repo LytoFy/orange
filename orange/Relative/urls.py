@@ -22,9 +22,11 @@ urlpatterns = [
     # 粉丝数量/我的粉丝（查询接口） -------测试通过
     path('myfans/',myfans,name='myfans'),
 
+
+    # 查询收藏的壁纸/手账 （查询接口）
+    path('collection/',collection,name= 'collection'),
     # 收藏壁纸/手账 （动作接口）    --------测试通过
     path('collectionto/',collectionto,name= 'collectionto'),
-    # 发布壁纸/手账
 
     # 显示回收站里的图片（查询接口）      --------测试通过
     path('listrecover/',listrecover,name= 'listrecover'),
