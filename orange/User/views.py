@@ -13,6 +13,9 @@ from django.views import View
 from App.models import *
 
 import logging
+
+from App.views import Upload
+
 inf_logger = logging.getLogger('inf')
 
 def verifyEmail(ema,ver):
@@ -167,7 +170,9 @@ class ModifyInfo(View):
                     data['msg'] = "性别修改失败"
                     data['sex'] = '输入错误'
             if icon:
-                # user.icon=icon
+                up = Upload()
+                icon=up.file(icon)
+                user.icon=icon
                 #头像存储
                 user.save()
                 data['code'] = "1"
