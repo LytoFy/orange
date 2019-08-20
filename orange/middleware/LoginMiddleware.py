@@ -20,6 +20,9 @@ class LoginMiddleware(MiddlewareMixin):
                      '/orange/relative/listrecover/','/orange/relative/recoverordelete/',]  #如果在这个列表就需要验证是否登陆
         #同url 排除get请求的需要自己加if判断
         if request.path in path_list:
+            id= request.session.get('userid',0)
+            if id!=0:
+                cache.set('userid',id,60*60*24)
             userid = cache.get('userid')
 
             print(userid)

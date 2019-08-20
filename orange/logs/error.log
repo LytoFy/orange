@@ -117,4 +117,12 @@
 2019-08-18 13:29:10 ERROR [9724-Thread-1] LogMiddleware.process_exception line 11: must be str, not type
 2019-08-18 13:30:11 ERROR [8512-Thread-1] LogMiddleware.process_exception line 11: unsupported operand type(s) for +: 'InMemoryUploadedFile' and 'str'
 >>>>>>> pqw
+<<<<<<< HEAD
 2019-08-19 10:16:53 ERROR [11216-Thread-1] LogMiddleware.process_exception line 11: 'WSGIRequest' object has no attribute 'FILE'
+=======
+2019-08-19 12:51:53 ERROR [12440-Thread-1] LogMiddleware.process_exception line 11: 'NoneType' object has no attribute 'path'
+<<<<<<< HEAD
+>>>>>>> slj
+=======
+2019-08-19 15:24:59 ERROR [12160-Thread-1] LogMiddleware.process_exception line 11: 'QuerySet' object has no attribute 'id'
+>>>>>>> slj

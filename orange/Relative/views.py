@@ -95,6 +95,9 @@ def concernto(request):
                 return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "关注对象不能是自己"}})
         except:
             return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "类型转换错误"}})
+        # 判断传入的用户id是否有效
+        if not User.objects.filter(id=userid).first():
+            return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "该用户id不存在"}})
 
         # 查询是否关注过这个对象(如果存在这个粉丝
         fans = Concern.objects.filter(followers_id=userid,fans_id=user.id).first()
@@ -166,14 +169,18 @@ def liketo(request):
             likeuserid = int(request.POST.get("userid"))
             if user.id == likeuserid:
                 return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "喜欢对象不能是自己"}})
+
         except:
             return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "类型转换错误"}})
+        # 判断传入的用户id是否有效
+        if not User.objects.filter(id=likeuserid).first():
+            return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "该用户id不存在"}})
         # 查询传入的id是否点击过喜欢
         userlikeme = LikePerson.objects.filter(user_id=likeuserid,user_like_id=user.id).first()
         if userlikeme:
             # 如果点击过喜欢
             userlikeme.delete()
-            return JsonResponse(data={"code": "1", "msg": "success", "data": {"success": "已经给TA点过喜欢"}})
+            return JsonResponse(data={"code": "1", "msg": "success", "data": {"success": "已经取消喜欢"}})
         else:
             # 否则添加一条喜欢记录
             LikePerson.objects.create(user_id=likeuserid,user_like_id=user.id)
@@ -252,19 +259,65 @@ def likemuralto(request):
             # 如果已经点击过
             img.delete()
         else:
+            img = Mural.objects.filter(id=muraid).first()
+            if not img:
+                return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "壁纸id不存在"}})
             LikeMural.objects.create(user_id=user.id,mural_id=muraid)
 
         data = {
             "code": 1,
             'msg': "success",
             "data": {
-                "success": "已给该壁纸点击喜欢（其实好像是收藏吧）"
+                "success": "已给该壁纸点击喜欢"
             }
         }
         return JsonResponse(data=data)
 
     elif request.method == "GET":
         return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "别用GET请求啊"}})
+
+
+# 查询收藏的壁纸/手账 （查询接口）
+def collection(request):
+    if request.method == "POST":
+        loginuserid = cache.get('userid')
+        # user = User.objects.get(id=1)
+
+        if not loginuserid:
+            return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "未检测到用户已登录"}})
+        user = User.objects.filter(id=loginuserid).first()
+        # 查询用户收藏的手账
+        handbook = list(UserImg.objects.filter(user_id=user.id,type=3,is_delete=0).values("path","type","info","upload_date"))
+        # 查询用户收藏的壁纸
+        mural = list(UserImg.objects.filter(user_id=user.id, type=4,is_delete=0).values("path","type","info","upload_date"))
+
+        for i in handbook:
+            img = Handbook.objects.filter(path=i["path"]).first()
+            if not img:
+                img = Mural.objects.filter(path=i["path"]).first()
+            i["imgid"] = img.id
+
+        for j in mural:
+            img = Handbook.objects.filter(path=j["path"]).first()
+            if not img:
+                img = Mural.objects.filter(path=j["path"]).first()
+            j["imgid"] = img.id
+
+
+        data = {
+            "code": 1,
+            'msg': "success",
+            "data": {
+                "hanbook":handbook,
+                "mural":mural,
+            }
+        }
+
+        return JsonResponse(data=data)
+
+    elif request.method == "GET":
+        return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "别用GET请求啊"}})
+
 
 # 用户收藏壁纸或手账（动作接口）
 def collectionto(request):
@@ -283,11 +336,18 @@ def collectionto(request):
         img = Mural.objects.filter(id=imgid).first()
         if not img:
             img = Handbook.objects.filter(id=imgid).first()
+            if not img:
+                return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "图片id不存在"}})
 
         # 判断是否收藏过本手账或者图片
         userimg = UserImg.objects.filter(user_id=user.id)
         for usei in userimg:
             if img.path == usei.path:
+                # 如果是已经被放入回收站的图片，则修改为未删除
+                if usei.is_delete == 1:
+                    usei.is_delete = 0
+                    usei.save()
+                    return JsonResponse(data={"code": "1", "msg": "success", "data": {"success": "已添加到收藏列表"}})
                 usei.delete()
                 return JsonResponse(data={"code": "1", "msg": "success", "data": {"success": "已从收藏列表中去除"}})
 
@@ -342,6 +402,7 @@ def listrecover(request):
         return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "别用GET请求啊"}})
 
 
+# 恢复回收站里的图片，或者把图片移入回收站 (动作接口)
 def recoverordelete(request):
     if request.method == "POST":
         loginuserid = cache.get('userid')
@@ -358,6 +419,8 @@ def recoverordelete(request):
         img = Handbook.objects.filter(id=imgid).first()
         if not img:
             img = Mural.objects.filter(id=imgid).first()
+            if not img:
+                return JsonResponse(data={"code": "0", "msg": "fail", "data": {"error": "图片id不存在"}})
         # 如果图片存在
         delimg = UserImg.objects.filter(user_id=user.id,path=img.path).first()
         if delimg:
