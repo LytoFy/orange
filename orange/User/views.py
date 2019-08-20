@@ -98,7 +98,9 @@ class Login(View):
         user = User.objects.filter(email=email).first()
         if user:
             if check_password(password, user.password):
-                cache.set('userid',user.id)
+                cache.set('userid',user.id,60*60*24)
+                request.session['userid']=user.id
+                request.session.set_expiry(60 * 60 * 24)
                 inf_logger.info("%s登陆成功" % email)
                 date = {
                     'code': 1,
@@ -122,6 +124,7 @@ class Loginout(View):
     def get(self,request):
         inf_logger.info("%s注销成功" % request.session.get('userid'))
         cache.delete('userid')
+        request.session.delete("userid")
         data = {
             'code': '1',
             'msg': '用户注销成功'
