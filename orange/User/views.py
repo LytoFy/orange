@@ -19,28 +19,32 @@ from App.views import Upload
 inf_logger = logging.getLogger('inf')
 
 def verifyEmail(ema,ver):
+    print('-----------------------------')
     # 授权码
-    auCode = "juhlknddtmxpbbab"
+    auCode = "ftnhwiwoeiwjbecb"
     fromEmail = "970524784@qq.com"  # 这个授权码，就是发送邮箱的授权码
     toEmail = ema
     smtpSever = "smtp.qq.com"  # 邮箱服务器地址
     port = 25  # 邮件服务的端口
 
     smtp = smtplib.SMTP(smtpSever, port)
+    print("=====",smtp)
     # 登录
     smtp.login(fromEmail, auCode)
+    print(smtp.login(fromEmail, auCode))
 
     # 生成邮件
-    msg = MIMEText("验证码是：%s"%ver)
-    msg["Subject"] = "orange验证"  # 邮件的标题
+    msg = MIMEText("欢迎注册小橘子，这里有精美的壁纸福利，快来领取，验证码是：%s，请在五分钟内完成验证。真的会过期的啊，还不快点！"%ver)
+    msg["Subject"] = "orange小橘子验证码"  # 邮件的标题
     msg['From'] = fromEmail
     msg['To'] = toEmail
 
+    print('-------========',123456)
     # 发送邮件  msg.as_string() 像邮件一样发送
     smtp.sendmail(fromEmail, toEmail, msg.as_string())
-
+    print('==-=--=-=-==-=',smtp)
     # 关闭
-    smtp.close()
+    return 1
 
 
 class Register(View):
@@ -50,9 +54,11 @@ class Register(View):
         if not email:
             return JsonResponse({'code':'0','msg':'邮箱为空'})
         verify = random.randint(1000,9999)
-        verifyEmail(email,verify)
+        n=0
+        n=verifyEmail(email,verify)
         cache.set('verify',str(verify),300)
-        return JsonResponse({'code':'0','msg':'邮箱已发送，等待时间过程可能邮箱错误'})
+
+        return JsonResponse({'code':n,'msg':'邮箱已发送，等待时间过程可能邮箱错误'})
 
 
     def post(self,request):
@@ -153,6 +159,7 @@ class ModifyInfo(View):
                 data['code']="1"
                 data['msg']="用户名修改成功"
                 data['name']=name
+                inf_logger.info("%s修改成功" % name)
             if sign:
                 user.sign=sign
                 user.save()
@@ -181,12 +188,13 @@ class ModifyInfo(View):
                 data['code'] = "1"
                 data['msg'] = "头像修改成功"
                 data['icon'] = icon
-
+            inf_logger.info("%s修改成功" % str(userid))
             return JsonResponse(data)
         return JsonResponse(data)
 
 class Info(View):
     def get(self,requsert):
+
         userid = cache.get('userid')
         user = User.objects.filter(id=userid)
         fans = len(Concern.objects.filter(followers_id=userid))
@@ -203,6 +211,8 @@ class Info(View):
             'like_num':like_num,
 
         }
+        inf_logger.info("%获取成功" % str(userid))
+
         return JsonResponse(data)
 
 
